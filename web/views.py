@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from .forms import LoginForm
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import authenticate, login, logout
+from .forms import LoginForm, EmployeeForm
+from .models import Empleado
+from django.shortcuts import redirect
+from django.utils import timezone
 
 # Create your views here.
 def log_in(request):
@@ -26,13 +28,35 @@ def home(request):
         return render(request, 'web/home.html')
 
 def table(request):
-    if not request.user.is_authenticated:
-        return render(request, 'web/login.html', {'form':LoginForm})
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
     else:
-        return render(request, 'web/table.html')
+        form = EmployeeForm()
+    empleados = Empleado.objects.filter(inicio__lte=timezone.now()).order_by('nombre')
+    return render(request, 'web/table.html', {'empleados':empleados,'form':EmployeeForm})
 
 def charts(request):
     if not request.user.is_authenticated:
         return render(request, 'web/login.html', {'form':LoginForm})
     else:
         return render(request, 'web/charts.html')
+
+def delete_employee(request, pk):
+    empleado = Empleado.objects.get(id=pk)
+    if request.method == 'POST':
+        empleado.delete()
+        return redirect('table')
+    return render(request, 'web/delete_employee.html', {'form':EmployeeForm})
+
+def edit_employee(request, pk):
+    empleado = Empleado.objects.get(id=pk)
+    if request.method == 'GET':
+        form = EmployeeForm(instance=empleado)
+    else:
+        form = EmployeeForm(request.POST, instance=empleado)
+        if form.is_valid():
+            form.save()
+            return redirect('table')
+    return render(request,'web/edit_employee.html',{'form':form})
