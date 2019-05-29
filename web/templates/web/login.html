@@ -1,23 +1,22 @@
 {% extends 'web/base.html' %}
-
-{% block content %}
-
+  {% block content %}
+    <!-- Form Login -->
     <form method="POST" class="form-container">
-        <h2 class="login-text">Login</h2>
-        <br />
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-outline-success btn-block">Submit</button>
-        <hr />
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-              <div class="copyright text-left my-auto">
-                <span><b>User:</b> <i>testing</i></span>
-                <br />
-                <span><b>Pass:</b> <i>Test100000</i></span>
-              </div>
-            </div>
-          </footer>
+      <h2 class="login-text">Login</h2>
+      <br />
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-outline-success btn-block">Submit</button>
+      <hr />
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-left my-auto">
+            <span><b>User:</b> <i>testing</i></span>
+            <br />
+            <span><b>Pass:</b> <i>Test100000</i></span>
+          </div>
+        </div>
+      </footer>
     </form>
-
-{% endblock %}
+    <!-- ./ End Form Login -->
+  {% endblock %}

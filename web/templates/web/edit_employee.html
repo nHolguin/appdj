@@ -1,32 +1,28 @@
 {% extends 'web/base_home.html' %}
-
-{% block main %}
-{% if user.is_authenticated %}
-<!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Edit Employee</h1>
-<br />
-
-<form method="post" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <div class="row">
-      <div class="col">
-        {% for fields in form %}
-          <span>{{fields.label}}</span>
-          {{fields}}
-          <br />
-        {% endfor %}
-        <div class="text-right">
+  {% block main %}
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Edit Employee</h1>
+    <br />
+    <!-- ./ End Page Heading -->
+    <!-- Form Edit Employee -->
+    <form method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <div class="row">
+        <div class="col">
+          {% for fields in form %}
+            <span>{{fields.label}}</span>
+            {{fields}}
+            <br />
+          {% endfor %}
+          <div class="text-right">
             <button type="submit" class="btn btn-success">Save</button>
             <a href="{% url 'table' %}" class="btn btn-info">Cancel</a>
+          </div>
+          <br />
         </div>
-        <br />
+        <div class="col">
+        </div>
       </div>
-      <div class="col">
-      </div>
-    </div>
-  </form>
-
-{% else %}
-  <a href="{% url 'log_in' %}">Login</a>
-{% endif %}
-{% endblock %}
+    </form>
+    <!-- ./ End Form Edit Employee-->
+  {% endblock %}

@@ -8,5 +8,10 @@ class Empleado(models.Model):
     posicion = models.CharField(max_length=200)
     oficina = models.CharField(max_length=200)
     edad = models.IntegerField()
-    inicio = models.DateTimeField(default=timezone.now())
+    inicio = models.DateTimeField(default=timezone.now)
     salario = models.FloatField()
+
+class Reporte(models.Model):
+    id = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    descripcion = models.CharField(max_length=200)
